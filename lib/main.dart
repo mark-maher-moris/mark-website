@@ -1,6 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:mark_website/fonts.dart';
 import 'package:mark_website/image_manager.dart';
 import 'package:mark_website/project_model.dart';
@@ -30,10 +31,27 @@ class MyApp extends StatelessWidget {
       onHoverMouseCursor: SystemMouseCursors.none,
       mouseStylesStack: [
         MouseStyle(
-          size: const Size(20, 20),
+          size: const Size(8, 8),
           latency: const Duration(milliseconds: 25),
           decoration: BoxDecoration(
-              shape: BoxShape.circle, color: Colors.white.withOpacity(0.4)),
+              color: const Color.fromARGB(255, 255, 242, 65),
+              shape: BoxShape.circle),
+        ),
+        MouseStyle(
+          size: const Size(26, 26),
+          latency: const Duration(milliseconds: 75),
+          visibleOnHover: false,
+          decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                )
+              ],
+              color: Colors.transparent,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white)),
         ),
       ],
       child: MaterialApp(
@@ -61,27 +79,78 @@ class _HomeLandingPageState extends State<HomeLandingPage> {
     const Color.fromARGB(255, 255, 239, 97),
     const Color.fromARGB(255, 255, 82, 69),
   ];
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey projectsKey = GlobalKey();
+  GlobalKey aboutMeKey = GlobalKey();
+  GlobalKey contactKey = GlobalKey();
+
+  scrollToSection(GlobalKey key) {
+    final context = key.currentContext;
+    if (context != null) {
+      Scrollable.ensureVisible(context, duration: Duration(seconds: 1));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
+        drawerEnableOpenDragGesture: false,
         appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+          title: Row(children: [
+            AnimatedHoverText(
+              title: "Projects",
+              onTap: () {
+                scrollToSection(projectsKey);
+              },
+            ),
+            AnimatedHoverText(
+              title: "About me",
+              onTap: () {
+                scrollToSection(aboutMeKey);
+              },
+            ),
+            AnimatedHoverText(
+              title: "Certificates",
+              onTap: () {
+                scrollToSection(projectsKey);
+              },
+            ),
+            AnimatedHoverText(
+              title: "Contact",
+              onTap: () {
+                scrollToSection(contactKey);
+              },
+            ),
+          ]),
           actions: [
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: glowingBtn(title: "Contact", onTap: () {}),
             )
           ],
-          leading: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Text(
-              'Mark Maher',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
+          leading: IconButton(
+              onPressed: () {
+                _scaffoldKey.currentState!.openDrawer();
+              },
+              icon: Icon(
+                HugeIcons.strokeRoundedMentor,
+                color: Colors.white,
+              )),
+          // Padding(
+          //   padding: const EdgeInsets.all(10),
+          //   child: Text(
+          //     'Mark Maher',
+          //     style: TextStyle(color: Colors.white),
+          //   ),
+          // ),
+
           automaticallyImplyLeading: true,
           leadingWidth: 100,
-          backgroundColor: Colors.transparent,
         ),
+        drawer: Drawer(),
         extendBodyBehindAppBar: true,
         body: SingleChildScrollView(
           child: Stack(
@@ -105,86 +174,135 @@ class _HomeLandingPageState extends State<HomeLandingPage> {
                       padding: const EdgeInsets.only(top: 100),
                       child: Column(
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Mark Maher",
+                                        style: TextStyle(
+                                            fontSize: 45,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                      AnimatedTextKit(
+                                        repeatForever: true,
+                                        animatedTexts: [
+                                          ColorizeAnimatedText(
+                                              'Enterpreneur - Software Engineer',
+                                              colors: colorizeColors,
+                                              textStyle: TextStyle(
+                                                  fontSize: 25,
+                                                  color: const Color.fromARGB(
+                                                      255, 255, 42, 42))),
+                                          ColorizeAnimatedText(
+                                              'Enterpreneur - Software Engineer',
+                                              colors: colorizeColors,
+                                              textStyle: TextStyle(
+                                                  fontSize: 25,
+                                                  color: const Color.fromARGB(
+                                                      255, 57, 149, 255))),
+                                        ],
+                                      ),
+                                      rowPoint(
+                                          text:
+                                              'Skilled Mobile App Developer with 2 years of experience'),
+                                      rowPoint(
+                                          text:
+                                              'Strong problem-solving skilles'),
+                                      rowPoint(
+                                          text:
+                                              'Experienced in translating business requirements into high-quality solutions.'),
+                                      rowPoint(
+                                          text: 'Strong communication skills'),
+                                      rowPoint(
+                                          text:
+                                              'Enterpreneur with a passion for innovation'),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      glowingBtn(
+                                          title: "Download CV", onTap: () {})
+                                    ]),
+                                glassContainer(
+                                    isCircular: true,
+                                    child: Container(
+                                        height: 500,
+                                        width: 500,
+                                        child:
+                                            Image.asset(ImageManager.myImage)))
+                              ],
+                            ),
+                          ),
+                          Container(
+                            key: projectsKey,
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 60,
+                                ),
+                                Text(
+                                  "Projects",
+                                  style: TextStyle(
+                                      fontSize: 45,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Text(
-                                      "Mark Maher",
-                                      style: TextStyle(
-                                          fontSize: 45,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    ),
-                                    AnimatedTextKit(
-                                      repeatForever: true,
-                                      animatedTexts: [
-                                        ColorizeAnimatedText(
-                                            'Enterpreneur - Software Engineer',
-                                            colors: colorizeColors,
-                                            textStyle: TextStyle(
-                                                fontSize: 25,
-                                                color: const Color.fromARGB(
-                                                    255, 255, 42, 42))),
-                                        ColorizeAnimatedText(
-                                            'Enterpreneur - Software Engineer',
-                                            colors: colorizeColors,
-                                            textStyle: TextStyle(
-                                                fontSize: 25,
-                                                color: const Color.fromARGB(
-                                                    255, 57, 149, 255))),
+                                    for (int i = 0; i < myProjects.length; i++)
+                                      ProjectWidget(model: myProjects[i])
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          Container(
+                              key: contactKey,
+                              width: double.infinity,
+                              constraints: BoxConstraints(maxWidth: 600),
+                              margin: EdgeInsets.all(30),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.white.withOpacity(0.2),
+                                border:
+                                    Border.all(color: Colors.white, width: 4),
+                              ),
+                              child: Column(children: [
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  "Contact Me",
+                                  style: TextStyle(
+                                      fontSize: 45,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Card(
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          HugeIcons.strokeRoundedPhoneOff01,
+                                        ),
+                                        Text(""),
                                       ],
                                     ),
-                                    rowPoint(
-                                        text:
-                                            'Skilled Mobile App Developer with 2 years of experience'),
-                                    rowPoint(
-                                        text: 'Strong problem-solving skilles'),
-                                    rowPoint(
-                                        text:
-                                            'Experienced in translating business requirements into high-quality solutions.'),
-                                    rowPoint(
-                                        text: 'Strong communication skills'),
-                                    rowPoint(
-                                        text:
-                                            'Enterpreneur with a passion for innovation'),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    glowingBtn(
-                                        title: "Download CV", onTap: () {})
-                                  ]),
-                              glassContainer(
-                                  isCircular: true,
-                                  child: Container(
-                                      height: 500,
-                                      width: 500,
-                                      child: Image.asset(ImageManager.myImage)))
-                            ],
-                          ),
-                          SizedBox(
-                            height: 50,
-                          ),
-                          Text(
-                            "Projects",
-                            style: TextStyle(
-                                fontSize: 45,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              for (int i = 0; i < myProjects.length; i++)
-                                projectWidget(model: myProjects[i])
-                            ],
-                          )
+                                    shape: RoundedRectangleBorder())
+                              ]))
                         ],
                       ))),
             ],
@@ -193,35 +311,90 @@ class _HomeLandingPageState extends State<HomeLandingPage> {
   }
 }
 
-Widget projectWidget({required ProjectModel model}) {
-  return Padding(
+class ProjectWidget extends StatefulWidget {
+  final ProjectModel model;
+
+  const ProjectWidget({Key? key, required this.model}) : super(key: key);
+
+  @override
+  _ProjectWidgetState createState() => _ProjectWidgetState();
+}
+
+class _ProjectWidgetState extends State<ProjectWidget> {
+  bool hover = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
       padding: EdgeInsets.all(10),
       child: InkWell(
-        onTap: () {},
-        child: Container(
-          width: 700,
-          height: 500,
-          child: Center(
-              child: Column(
-            children: [
-              ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.network(
-                    model.image.toString(),
-                    fit: BoxFit.cover,
-                  )),
-              Text(
-                model.name.toString(),
-                style: TextStyle(),
+        onHover: (value) {
+          setState(() {
+            hover = value;
+          });
+        },
+        onTap: () {
+          // Define onTap behavior here if needed
+        },
+        child: Stack(
+          children: [
+            Container(
+              width: 700,
+              height: 500,
+              child: Center(
+                child: Column(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.network(
+                          widget.model.image.toString(),
+                          fit: BoxFit.cover,
+                          height: 400,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20)),
+                        width: double.infinity,
+                        child: Center(
+                          child: Text(
+                            widget.model.name.toString(),
+                            style: TextStyle(),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ],
-          )),
-          decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.white, width: 2)),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Colors.white, width: 2),
+              ),
+            ),
+            Container(
+              width: 700,
+              height: 500,
+              decoration: BoxDecoration(
+                color: hover
+                    ? const Color.fromARGB(137, 0, 116, 183)
+                    : Colors.white.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Colors.white, width: 2),
+              ),
+            ),
+          ],
         ),
-      ));
+      ),
+    );
+  }
 }
 
 Widget glassContainer(
@@ -305,4 +478,71 @@ Widget glowingBtn(
       ),
     ),
   );
+}
+
+class AnimatedHoverText extends StatefulWidget {
+  AnimatedHoverText({super.key, required this.onTap, required this.title});
+  final GestureTapCallback? onTap;
+  final String title;
+
+  @override
+  State<AnimatedHoverText> createState() => _AnimatedHoverTextState();
+}
+
+class _AnimatedHoverTextState extends State<AnimatedHoverText> {
+  Color containerColor = Colors.transparent;
+  bool shadow = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onHover: (event) {
+        setState(() {
+          containerColor = const Color.fromARGB(255, 72, 243, 33)
+              .withOpacity(0.4); // Change hover color
+          shadow = true;
+        });
+      },
+      onExit: (event) {
+        setState(() {
+          containerColor = Colors.transparent; // Reset color on exit
+          shadow = false;
+        });
+      },
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: AnimatedContainer(
+          curve: Curves.easeInOut,
+          duration: const Duration(milliseconds: 200),
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
+          decoration: BoxDecoration(
+            boxShadow: [
+              shadow
+                  ? BoxShadow(
+                      color: const Color.fromARGB(255, 97, 97, 97)
+                          .withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                    )
+                  : BoxShadow(
+                      color: Colors.transparent,
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                    )
+            ],
+            color: containerColor,
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Text(
+            widget.title,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
