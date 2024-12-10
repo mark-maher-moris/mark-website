@@ -8,16 +8,17 @@ class ProjectModel {
   final String? video;
   final String? url;
   List<String>? screenshots;
+  final String? projectType;
 
-  ProjectModel({
-    this.name,
-    this.description,
-    this.image,
-    this.github,
-    this.playStore,
-    this.appStore,
-    this.video,
-    this.url,
-    this.screenshots,
-  });
+  ProjectModel(
+      {this.name,
+      this.description,
+      this.image,
+      this.github,
+      this.playStore,
+      this.appStore,
+      this.video,
+      this.url,
+      this.screenshots,
+      this.projectType});
 }

@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
     return MouseFollower(
       onHoverMouseCursor: SystemMouseCursors.none,
       mouseStylesStack: [
-        MouseStyle(
+        const MouseStyle(
           size: const Size(8, 8),
           latency: const Duration(milliseconds: 25),
           decoration: BoxDecoration(
@@ -87,7 +87,7 @@ class _HomeLandingPageState extends State<HomeLandingPage> {
   scrollToSection(GlobalKey key) {
     final context = key.currentContext;
     if (context != null) {
-      Scrollable.ensureVisible(context, duration: Duration(seconds: 1));
+      Scrollable.ensureVisible(context, duration: const Duration(seconds: 1));
     }
   }
 
@@ -135,8 +135,8 @@ class _HomeLandingPageState extends State<HomeLandingPage> {
               onPressed: () {
                 _scaffoldKey.currentState!.openDrawer();
               },
-              icon: Icon(
-                HugeIcons.strokeRoundedMentor,
+              icon: const Icon(
+                HugeIcons.strokeRoundedMenu02,
                 color: Colors.white,
               )),
           // Padding(
@@ -150,7 +150,11 @@ class _HomeLandingPageState extends State<HomeLandingPage> {
           automaticallyImplyLeading: true,
           leadingWidth: 100,
         ),
-        drawer: Drawer(),
+        drawer: Drawer(
+          shadowColor: Colors.white,
+          backgroundColor: Colors.black,
+          elevation: 20,
+        ),
         extendBodyBehindAppBar: true,
         body: SingleChildScrollView(
           child: Stack(
@@ -163,12 +167,12 @@ class _HomeLandingPageState extends State<HomeLandingPage> {
                   fit: BoxFit.cover,
                 ),
               ),
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  color: Colors.black.withOpacity(0.5),
-                ),
-              ),
+              // Expanded(
+              //   child: Container(
+              //     width: double.infinity,
+              //     color: Colors.black.withOpacity(0.5),
+              //   ),
+              // ),
               Center(
                   child: Padding(
                       padding: const EdgeInsets.only(top: 100),
@@ -183,7 +187,7 @@ class _HomeLandingPageState extends State<HomeLandingPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Mark Maher",
                                         style: TextStyle(
                                             fontSize: 45,
@@ -196,16 +200,16 @@ class _HomeLandingPageState extends State<HomeLandingPage> {
                                           ColorizeAnimatedText(
                                               'Enterpreneur - Software Engineer',
                                               colors: colorizeColors,
-                                              textStyle: TextStyle(
+                                              textStyle: const TextStyle(
                                                   fontSize: 25,
                                                   color: const Color.fromARGB(
                                                       255, 255, 42, 42))),
                                           ColorizeAnimatedText(
                                               'Enterpreneur - Software Engineer',
                                               colors: colorizeColors,
-                                              textStyle: TextStyle(
+                                              textStyle: const TextStyle(
                                                   fontSize: 25,
-                                                  color: const Color.fromARGB(
+                                                  color: Color.fromARGB(
                                                       255, 57, 149, 255))),
                                         ],
                                       ),
@@ -292,16 +296,20 @@ class _HomeLandingPageState extends State<HomeLandingPage> {
                                 SizedBox(
                                   height: 20,
                                 ),
-                                Card(
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          HugeIcons.strokeRoundedPhoneOff01,
-                                        ),
-                                        Text(""),
-                                      ],
-                                    ),
-                                    shape: RoundedRectangleBorder())
+                                contactMeWidget(
+                                    icon: HugeIcons.strokeRoundedContact,
+                                    value: "+(20)1210153804",
+                                    onTap: () {}),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                contactMeWidget(
+                                    icon: Icons.email_outlined,
+                                    value: "markmaher933@gmail.com",
+                                    onTap: () {}),
+                                SizedBox(
+                                  height: 20,
+                                ),
                               ]))
                         ],
                       ))),
@@ -309,6 +317,37 @@ class _HomeLandingPageState extends State<HomeLandingPage> {
           ),
         ));
   }
+}
+
+Widget contactMeWidget(
+    {required VoidCallback onTap,
+    required String value,
+    required IconData icon}) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      width: 300,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(
+              icon,
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            Text(value, style: TextStyle(fontWeight: FontWeight.bold)),
+          ],
+        ),
+      ),
+    ),
+  );
 }
 
 class ProjectWidget extends StatefulWidget {
@@ -344,33 +383,33 @@ class _ProjectWidgetState extends State<ProjectWidget> {
               child: Center(
                 child: Column(
                   children: [
-                    Expanded(
-                      flex: 3,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.network(
-                          widget.model.image.toString(),
-                          fit: BoxFit.cover,
-                          height: 400,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)),
-                        width: double.infinity,
-                        child: Center(
-                          child: Text(
-                            widget.model.name.toString(),
-                            style: TextStyle(),
-                          ),
-                        ),
-                      ),
-                    )
+                    // Expanded(
+                    //   flex: 3,
+                    //   child: ClipRRect(
+                    //     borderRadius: BorderRadius.circular(20),
+                    //     child: Image.network(
+                    //       widget.model.image.toString(),
+                    //       fit: BoxFit.cover,
+                    //       height: 400,
+                    //     ),
+                    //   ),
+                    // ),
+                    // Expanded(
+                    //   flex: 1,
+                    //   child: Container(
+                    //     height: 60,
+                    //     decoration: BoxDecoration(
+                    //         color: Colors.white,
+                    //         borderRadius: BorderRadius.circular(20)),
+                    //     width: double.infinity,
+                    //     child: Center(
+                    //       child: Text(
+                    //         widget.model.name.toString(),
+                    //         style: TextStyle(),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
               ),
