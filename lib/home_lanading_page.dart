@@ -5,6 +5,9 @@ import 'package:mark_website/consts.dart';
 import 'package:mark_website/contact_widget.dart';
 import 'package:mark_website/custom_drawer.dart';
 import 'package:mark_website/glowing_btn.dart';
+import 'package:mark_website/project_widget.dart';
+import 'package:mark_website/projects_data.dart';
+import 'package:mark_website/skils.dart';
 import 'package:simple_grid/simple_grid.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:mark_website/image_manager.dart';
@@ -45,62 +48,80 @@ class _HomeLandingPageState extends State<HomeLandingPage> {
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-          title: Row(children: [
-            AnimatedHoverText(
-              title: "Projects",
-              onTap: () {
-                scrollToSection(projectsKey);
-              },
-            ),
-            AnimatedHoverText(
-              title: "About me",
-              onTap: () {
-                scrollToSection(aboutMeKey);
-              },
-            ),
-            AnimatedHoverText(
-              title: "Certificates",
-              onTap: () {
-                scrollToSection(projectsKey);
-              },
-            ),
-            AnimatedHoverText(
-              title: "Contact",
-              onTap: () {
-                scrollToSection(contactKey);
-              },
-            ),
-            Spacer(),
-            FlutterSocialButton(
-              iconSize: 17,
-              onTap: () {
-                openLink(Consts.facebookLink);
-              },
-              mini: true,
-              buttonType: ButtonType.facebook,
-            ),
-            FlutterSocialButton(
-              iconSize: 17,
-              onTap: () {
-                openLink(Consts.instagramLink);
-              },
-              mini: true,
-              buttonType: ButtonType.instagram,
-            ),
-            FlutterSocialButton(
-              iconColor: const Color.fromARGB(255, 68, 12, 64),
-              iconSize: 17,
-              onTap: () {
-                openLink(Consts.tiktokLink);
-              },
-              mini: true,
-              buttonType: ButtonType.tiktok,
-            ),
-          ]),
+          title: MediaQuery.of(context).size.width < 850
+              ? Text(
+                  "Mark Maher",
+                  style: TextStyle(color: Colors.white, fontSize: 40),
+                )
+              : Row(children: [
+                  AnimatedHoverText(
+                    title: "Projects",
+                    onTap: () {
+                      scrollToSection(projectsKey);
+                    },
+                  ),
+                  AnimatedHoverText(
+                    title: "About me",
+                    onTap: () {
+                      scrollToSection(aboutMeKey);
+                    },
+                  ),
+                  AnimatedHoverText(
+                    title: "Certificates",
+                    onTap: () {
+                      scrollToSection(projectsKey);
+                    },
+                  ),
+                  AnimatedHoverText(
+                    title: "Contact",
+                    onTap: () {
+                      scrollToSection(contactKey);
+                    },
+                  ),
+                  Spacer(),
+                  FlutterSocialButton(
+                    iconSize: 17,
+                    onTap: () {
+                      openLink(Consts.facebookLink);
+                    },
+                    mini: true,
+                    buttonType: ButtonType.facebook,
+                  ),
+                  FlutterSocialButton(
+                    iconSize: 17,
+                    onTap: () {
+                      openLink(Consts.instagramLink);
+                    },
+                    mini: true,
+                    buttonType: ButtonType.instagram,
+                  ),
+                  FlutterSocialButton(
+                    iconColor: const Color.fromARGB(255, 68, 12, 64),
+                    iconSize: 17,
+                    onTap: () {
+                      openLink(Consts.tiktokLink);
+                    },
+                    mini: true,
+                    buttonType: ButtonType.tiktok,
+                  ),
+                  FlutterSocialButton(
+                    iconSize: 17,
+                    onTap: () {
+                      openLink(Consts.linkedinLink);
+                    },
+                    mini: true,
+                    buttonType: ButtonType.linkedin,
+                  ),
+                ]),
+
           actions: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: glowingBtn(title: "Contact", onTap: () {}),
+              child: glowingBtn(
+                  title: "Contact",
+                  onTap: () {
+                    openLink(Consts.whatsappLink);
+                  }),
             )
           ],
           leading: IconButton(
@@ -131,6 +152,7 @@ class _HomeLandingPageState extends State<HomeLandingPage> {
             children: [
               Container(
                 width: double.infinity,
+                height: MediaQuery.of(context).size.height * 5,
                 child: Image.asset(
                   ImageManager.background1,
                   fit: BoxFit.cover,
@@ -241,17 +263,16 @@ class _HomeLandingPageState extends State<HomeLandingPage> {
                                 SpGrid(
                                     width: MediaQuery.of(context).size.width,
                                     children: [
-                                      // for (int i = 0;
-                                      //     i < myProjects.length;
-                                      //     i++)
-                                      //   SpGridItem(
-                                      //       xs: 12,
-                                      //       sm: 6,
-                                      //       md: 4,
-                                      //       lg: 3,
-                                      //       child: ProjectWidget(
-                                      //           model: myProjects[i])
-                                      //           ),
+                                      for (int i = 0;
+                                          i < myProjects.length;
+                                          i++)
+                                        SpGridItem(
+                                            xs: 12,
+                                            sm: 6,
+                                            md: 4,
+                                            lg: 6,
+                                            child: ProjectWidget(
+                                                model: myProjects[i])),
                                     ])
                               ],
                             ),
@@ -272,7 +293,7 @@ class _HomeLandingPageState extends State<HomeLandingPage> {
                                   height: 20,
                                 ),
                                 Text(
-                                  "Contact Me",
+                                  StringsManager.contact,
                                   style: TextStyle(
                                       fontSize: 45,
                                       fontWeight: FontWeight.bold,
@@ -295,13 +316,74 @@ class _HomeLandingPageState extends State<HomeLandingPage> {
                                 SizedBox(
                                   height: 20,
                                 ),
-                              ]))
+                              ])),
+                          Text(
+                            StringsManager.about,
+                            style: TextStyle(
+                                fontSize: 45,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                'I am living in cairo , Egypt ',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              Text(
+                                'Bachelor of Computer science    --  EELU university ',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              Text(
+                                'Soft Skills: Honesty - Fast Learner – Collaborative - Problem Solving - Strong Search Skills ',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              Card(
+                                child: Text(''),
+                              ),
+                              SkillsPage(),
+                              languageContainer(
+                                  language: StringsManager.english,
+                                  level: 'B1'),
+                              languageContainer(
+                                  language: StringsManager.arabic, level: 'C2'),
+                              languageContainer(
+                                  language: StringsManager.german, level: 'A1'),
+                            ],
+                          ),
                         ],
                       ))),
             ],
           ),
         ));
   }
+}
+
+Widget languageContainer({String? language, String? level}) {
+  return Container(
+    padding: EdgeInsets.all(10),
+    margin: EdgeInsets.all(10),
+    height: 50,
+    width: 200,
+    decoration: BoxDecoration(
+        color: const Color.fromARGB(255, 255, 255, 255),
+        borderRadius: BorderRadius.circular(40),
+        border: Border.all(color: Colors.black, width: 2)),
+    child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+      Icon(Icons.circle_outlined),
+      Text(
+        language.toString(),
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+      ),
+      Text(
+        level.toString(),
+        style: TextStyle(fontSize: 17),
+      )
+    ]),
+  );
 }
 
 Widget glassContainer(

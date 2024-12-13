@@ -3,7 +3,7 @@ class ProjectModel {
   final String? description;
   final String? image;
   final String? github;
-  final String? playStore;
+  final String? googlePlay;
   final String? appStore;
   final String? video;
   final String? url;
@@ -15,7 +15,7 @@ class ProjectModel {
       this.description,
       this.image,
       this.github,
-      this.playStore,
+      this.googlePlay,
       this.appStore,
       this.video,
       this.url,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mark_website/project_model.dart';
+import 'package:mark_website/project_screen.dart';
 
 class ProjectWidget extends StatefulWidget {
   final ProjectModel model;
@@ -23,23 +24,47 @@ class _ProjectWidgetState extends State<ProjectWidget> {
             hover = value;
           });
         },
-        onTap: () {},
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return ProjectScreen(projectModel: widget.model);
+          }));
+        },
         child: Stack(
           children: [
             Container(
-              width: 700,
+              width: double.infinity,
               height: 500,
               child: Center(
                 child: Column(
                   children: [
                     Expanded(
-                      flex: 3,
+                      flex: 1,
+                      child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20)),
+                        ),
+                        width: double.infinity,
+                        child: Center(
+                          child: Text(
+                            widget.model.name.toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 6,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
+                        // borderRadius: BorderRadius.circular(20),
                         child: Image.network(
                           widget.model.image.toString(),
                           fit: BoxFit.cover,
                           height: 400,
+                          width: double.infinity,
                           errorBuilder: (context, error, stackTrace) {
                             return Text(
                               'Failed to load image ${error.toString()}',
@@ -54,13 +79,16 @@ class _ProjectWidgetState extends State<ProjectWidget> {
                       child: Container(
                         height: 60,
                         decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)),
+                          color: Colors.black,
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20)),
+                        ),
                         width: double.infinity,
                         child: Center(
                           child: Text(
                             widget.model.name.toString(),
-                            style: TextStyle(),
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ),
@@ -68,20 +96,21 @@ class _ProjectWidgetState extends State<ProjectWidget> {
                   ],
                 ),
               ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.white, width: 2),
-              ),
+              // decoration: BoxDecoration(
+              //   borderRadius: BorderRadius.only(
+              //       bottomLeft: Radius.circular(20),
+              //       bottomRight: Radius.circular(20)),
+              // ),
             ),
             Container(
               width: 700,
               height: 500,
               decoration: BoxDecoration(
                 color: hover
-                    ? const Color.fromARGB(137, 0, 116, 183)
-                    : Colors.white.withOpacity(0.2),
+                    ? const Color.fromARGB(166, 38, 38, 38)
+                    : Colors.transparent,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.white, width: 2),
+                // border: Border.all(color: Colors.white, width: 2),
               ),
             ),
           ],

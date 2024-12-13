@@ -5,4 +5,8 @@ class ImageManager {
 
   static const String background1 = "assets/images/background1.jpg";
   static const String background2 = "assets/images/1.jpg";
+
+  static const String googlePlay = "assets/images/googleplay.png";
+  static const String appStore = "assets/images/appstore.png";
+  static const String github = "assets/images/github.png";
 }

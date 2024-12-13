@@ -8,4 +8,6 @@ class Consts {
   static const String facebookLink =
       'https://www.facebook.com/profile.php?id=100007626997932';
   static const String cvLink = '';
+  static const String whatsappLink =
+      'https://api.whatsapp.com/send?phone=201210153804';
 }

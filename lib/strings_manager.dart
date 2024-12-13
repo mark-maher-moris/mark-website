@@ -6,4 +6,10 @@ class StringsManager {
 
   static const String phoneNumber = "+(20)1210153804";
   static const String email = "markmaher933@gmail.com";
+  static const String address = "Cair, Egypt";
+  static const String about = "About Me";
+  static const String contact = "Contact Me";
+  static const String english = "English";
+  static const String arabic = "Arabic";
+  static const String german = "German";
 }

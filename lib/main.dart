@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -56,6 +58,14 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        scrollBehavior: MaterialScrollBehavior().copyWith(
+          dragDevices: {
+            PointerDeviceKind.mouse,
+            PointerDeviceKind.touch,
+            PointerDeviceKind.stylus,
+            PointerDeviceKind.unknown
+          },
+        ),
         title: 'Mark Maher Website',
         theme: ThemeData(fontFamily: Fonts.cinzel, splashColor: Colors.blue),
         debugShowCheckedModeBanner: false,
